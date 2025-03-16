@@ -29,6 +29,7 @@ async function uploadFile() {
     try {
         const snapshot = await uploadBytes(storageRef, file);
         console.log("Upload réussi !", snapshot);
+        alert("Image envoyée !");
         
         // Récupérer l'URL du fichier stocké
         const url = await getDownloadURL(snapshot.ref);
