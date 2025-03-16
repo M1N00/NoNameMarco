@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoNameMarco</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e1e;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;            /* Utilise Flexbox pour aligner les éléments */
+            justify-content: center;  /* Centre les images horizontalement */
+            align-items: center;      /* Centre les images verticalement */
+            flex-wrap: wrap;          /* Permet de faire un retour à la ligne si nécessaire */
+            gap: 20px;                /* Ajoute un espacement (padding) entre les images */
+            padding: 20px;            /* Ajoute du padding autour du div-container */
+            }
+
+            .container img {
+            max-width: 100%;         /* S'assure que l'image ne dépasse pas du div */
+            height: auto;            /* Garde les proportions de l'image */
+        }
+   
+    </style>
+</head>
+<body>
+    <h1>Bienvenue sur Marcolet Anonyme</h1>
+    <p>Un espace libre pour s’exprimer et partager.</p>
+    
+    <input type="file" id="imageInput" />
+    <button id="uploadButton">Upload Image</button>
+
+    <p></p>
+    <h2>Voici les derniers potins en image:</h2>
+
+    <div id="container">
+
+    </div>
+</body>
+
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+<script src="script.js"></script>
+<script type="module">
+    // Importation des modules Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getStorage, ref, uploadBytesResumable } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
+    
+    // Configuration de Firebase
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialisation de Firebase
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
+
+    // Éléments HTML
+    const uploadButton = document.getElementById("uploadButton");
+    const imageInput = document.getElementById("imageInput");
+
+    // Fonction pour uploader l'image
+    function uploadImage() {
+      const file = imageInput.files[0]; // Récupérer le fichier sélectionné
+      if (!file) {
+        alert("Veuillez sélectionner une image !");
+        return;
+      }
+
+      // Créer un nom unique pour l'image
+      const randomNumber = Math.floor(Math.random() * 1000000); // Nombre aléatoire
+      const storageRef = ref(storage, `images/img${randomNumber}.jpg`); // Nom du fichier dans Firebase Storage
+
+      // Uploader l'image
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      // Suivre l'état de l'upload
+      uploadTask.on("state_changed", 
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Progression : " + progress + "%");
+        }, 
+        (error) => {
+          console.error("Erreur d'upload : ", error);
+        }, 
+        () => {
+          console.log("Upload terminé avec succès !");
+          alert("Image téléchargée avec succès !");
+        }
+      );
+    }
+
+    // Attacher l'événement du bouton
+    uploadButton.addEventListener("click", uploadImage);
+  </script>
+</html>
