@@ -48,65 +48,9 @@
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
 <script src="script.js"></script>
-<script type="module">
-    // Importation des modules Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getStorage, ref, uploadBytesResumable } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
-    
-    // Configuration de Firebase
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
 
-    // Initialisation de Firebase
-    const app = initializeApp(firebaseConfig);
-    const storage = getStorage(app);
+<script src="script2.js" type="module"></script>
 
-    // Éléments HTML
-    const uploadButton = document.getElementById("uploadButton");
-    const imageInput = document.getElementById("imageInput");
-
-    // Fonction pour uploader l'image
-    function uploadImage() {
-      const file = imageInput.files[0]; // Récupérer le fichier sélectionné
-      if (!file) {
-        alert("Veuillez sélectionner une image !");
-        return;
-      }
-
-      // Créer un nom unique pour l'image
-      const randomNumber = Math.floor(Math.random() * 1000000); // Nombre aléatoire
-      const storageRef = ref(storage, `images/img${randomNumber}.jpg`); // Nom du fichier dans Firebase Storage
-
-      // Uploader l'image
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      // Suivre l'état de l'upload
-      uploadTask.on("state_changed", 
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Progression : " + progress + "%");
-        }, 
-        (error) => {
-          console.error("Erreur d'upload : ", error);
-        }, 
-        () => {
-          console.log("Upload terminé avec succès !");
-          alert("Image téléchargée avec succès !");
-        }
-      );
-    }
-
-    // Attacher l'événement du bouton
-    uploadButton.addEventListener("click", uploadImage);
-  </script>
 </html>

@@ -6,7 +6,7 @@ firebase.initializeApp({
     storageBucket: "nonamemarcobdd.firebasestorage.app",
     messagingSenderId: "544836475440",
     appId: "1:544836475440:web:6632eff99dcfbeb1e7abf5",
-    appId: "YOUR_APP_ID"
+
 });
 
 // Récupérer une instance de Firebase Storage
