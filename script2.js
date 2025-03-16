@@ -1,6 +1,6 @@
 // Importation des modules Firebase nécessaires
-import { initializeApp } from "https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
 
 // Configuration de Firebase
 const firebaseConfig = {
