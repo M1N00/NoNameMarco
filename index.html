@@ -21,12 +21,14 @@
             flex-wrap: wrap;          /* Permet de faire un retour à la ligne si nécessaire */
             gap: 20px;                /* Ajoute un espacement (padding) entre les images */
             padding: 20px;            /* Ajoute du padding autour du div-container */
-            }
+        }
 
-            .container img {
-            max-width: 100%;         /* S'assure que l'image ne dépasse pas du div */
-            height: auto;            /* Garde les proportions de l'image */
-            max-height: 90vh;        /* Limite la hauteur de l'image à 90% de la hauteur de la page */
+        .container img,
+        .container video {
+            max-width: 100%;         /* S'assure que l'image ou la vidéo ne dépasse pas du div */
+            height: auto;            /* Garde les proportions de l'image ou de la vidéo */
+            max-height: 90vh;        /* Limite la hauteur de l'image ou de la vidéo à 90% de la hauteur de la page */
+            display: block;  
         }
    
     </style>
@@ -53,5 +55,25 @@
 <script src="script.js"></script>
 
 <script src="script2.js" type="module"></script>
+
+<script>
+    // Ajoutez ce script pour afficher les vidéos avec les attributs nécessaires
+    function displayMedia(url, type) {
+        const container = document.getElementById('container');
+        let mediaElement;
+        
+        if (type === 'image') {
+            mediaElement = document.createElement('img');
+            mediaElement.src = url;
+        } else if (type === 'video') {
+            mediaElement = document.createElement('video');
+            mediaElement.src = url;
+            mediaElement.controls = true;
+            mediaElement.preload = 'metadata';
+        }
+        
+        container.appendChild(mediaElement);
+    }
+</script>
 
 </html>
