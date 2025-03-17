@@ -28,7 +28,7 @@ storageRef.listAll()
           if (['jpg', 'jpeg', 'png', 'gif'].includes(fileType)) {
             mediaElement = document.createElement('img');
             mediaElement.src = url;
-          } else if (['mp4', 'webm', 'ogg'].includes(fileType)) {
+          } else if (['mp4', 'webm', 'ogg',"mov"].includes(fileType)) {
             mediaElement = document.createElement('video');
             mediaElement.src = url;
             mediaElement.controls = true;
