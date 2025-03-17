@@ -24,20 +24,16 @@ async function uploadFile() {
 
     const file = fileInput.files[0];
     const storage = getStorage(app);
-    const fileType = file.type.split('/')[0]; // Récupère le type de fichier (image ou video)
-    const storageRef = ref(storage, `${fileType}s/${file.name}`); // Stocke le fichier dans le dossier "images" ou "videos"
+    const storageRef = ref(storage, `img${file.name}`); // Stocke le fichier dans le dossier "uploads"
     
     try {
         const snapshot = await uploadBytes(storageRef, file);
         console.log("Upload réussi !", snapshot);
-        alert(`${fileType.charAt(0).toUpperCase() + fileType.slice(1)} envoyé(e) !`);
+        alert("Image envoyée !");
         
         // Récupérer l'URL du fichier stocké
         const url = await getDownloadURL(snapshot.ref);
         console.log("URL du fichier :", url);
-        
-        // Afficher le média dans le conteneur
-        displayMedia(url, fileType);
     } catch (error) {
         console.error("Erreur lors de l'upload :", error);
     }
@@ -50,21 +46,3 @@ window.addEventListener("DOMContentLoaded", () => {
         uploadButton.addEventListener("click", uploadFile);
     }
 });
-
-// Fonction pour afficher les médias dans le conteneur
-function displayMedia(url, type) {
-    const container = document.getElementById('container');
-    let mediaElement;
-    
-    if (type === 'image') {
-        mediaElement = document.createElement('img');
-        mediaElement.src = url;
-    } else if (type === 'video') {
-        mediaElement = document.createElement('video');
-        mediaElement.src = url;
-        mediaElement.controls = true;
-        mediaElement.preload = 'metadata';
-    }
-    
-    container.appendChild(mediaElement);
-}
